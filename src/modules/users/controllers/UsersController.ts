@@ -6,7 +6,18 @@ export default class UserController {
    public async index(req: Request, res: Response): Promise<Response> {
       const listUser = new ListUserService();
 
-      const users = await listUser.execute();
+      const usersInfo = await listUser.execute();
+
+      const users = usersInfo.map(user => {
+         return {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            avatar: user.avatar,
+            created_at: user.created_at,
+            updated_at: user.updated_at,
+         };
+      });
 
       return res.json(users);
    }
@@ -22,6 +33,8 @@ export default class UserController {
          password,
       });
 
-      return res.status(201).json(user);
+      const { password: _, ...userCreated } = user;
+
+      return res.status(201).json(userCreated);
    }
 }
