@@ -1,11 +1,11 @@
 import { Router } from 'express';
 import { celebrate, Joi, Segments } from 'celebrate';
 import UserController from '../controllers/UsersController';
+import authentication from '../middlewares/authentication';
 
 const userRoutes = Router();
 const userController = new UserController();
 
-userRoutes.get('/', userController.index);
 userRoutes.post(
    '/',
    celebrate({
@@ -30,5 +30,9 @@ userRoutes.post(
    }),
    userController.create,
 );
+
+userRoutes.use(authentication);
+
+userRoutes.get('/', userController.index);
 
 export default userRoutes;
