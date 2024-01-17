@@ -7,11 +7,13 @@ import routes from './routes';
 import AppError from '@shared/errors/AppError';
 import { appDataSource } from '@shared/typeorm';
 import { errors } from 'celebrate';
+import { uploadConfig } from '@config/upload';
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use('/file', express.static(uploadConfig.directory));
 app.use(routes);
 app.use(errors());
 
