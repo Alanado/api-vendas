@@ -3,6 +3,12 @@ import AppError from '@shared/errors/AppError';
 import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
 
+interface TokenPayload {
+   iat: number;
+   exp: number;
+   sub: string;
+}
+
 export default async function authentication(
    req: Request,
    res: Response,
@@ -18,6 +24,12 @@ export default async function authentication(
 
    try {
       const session = verify(token, jwt.secret);
+
+      const { sub } = session as TokenPayload;
+
+      req.user = {
+         id: sub
+      }
 
       next();
    } catch {
