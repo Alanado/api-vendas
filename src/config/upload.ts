@@ -28,18 +28,20 @@ class UploadConfig {
       ) => {
          const type = mime.extension(file.mimetype) as string;
 
+         console.log(type);
+
          const conditions = ['jpg', 'png', 'jpeg'];
 
-         if (conditions.includes(type)) {
-            callback(null, true);
+         if (!conditions.includes(type)) {
+            callback(
+               new AppError(
+                  'O campo avatar só aceita imagens(jpg, png, jpeg).',
+                  409,
+               ) as unknown as Error,
+            );
          }
 
-         callback(
-            new AppError(
-               'O campo avatar só aceita imagens(jpg, png, jpeg).',
-               409,
-            ) as unknown as Error,
-         );
+         callback(null, true);
       };
    }
 

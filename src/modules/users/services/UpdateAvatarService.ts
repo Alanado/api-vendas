@@ -14,8 +14,12 @@ interface IResponse {
    avatar: string;
 }
 
-export default class CreateSessionsService {
+export default class UpdateAvatarService {
    public async execute({ id, fileName }: IRequest): Promise<IResponse> {
+      if (!fileName) {
+         throw new AppError('Sem imagem de avatar enviado.');
+      }
+
       const user = (await UserRepository.findById(id)) as User;
 
       if (user.avatar) {
@@ -23,7 +27,7 @@ export default class CreateSessionsService {
 
          const avatarFilePathExist = await fs.stat(avatarFilePath);
 
-         if (avatarFilePath) {
+         if (avatarFilePathExist) {
             await fs.unlink(avatarFilePath);
          }
       }
