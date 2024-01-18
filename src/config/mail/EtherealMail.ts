@@ -26,7 +26,7 @@ export default class EtherealMail {
          text: body,
       });
 
-      console.log(`Mensagem enviada: ${message}`);
+      console.log(`Mensagem enviada: ${message.response}`);
       console.log(
          `URL para ver caixa de entrada: ${nodemailer.getTestMessageUrl(
             message,
