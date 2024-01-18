@@ -17,11 +17,22 @@ export default class SendForgotPasswordService {
          );
       }
 
-      const token = await UserTokensRepository.generate(user.id);
+      const { token } = await UserTokensRepository.generate(user.id);
 
       EtherealMail.sendMail({
-         to: email,
-         body: `Solicitação de redefinição de senha: ${token?.token}`,
+         to: {
+            email: user.email,
+            name: user.name,
+         },
+         subject: 'Redefinição de senha.',
+         template: {
+            template:
+               'Olá {{user}}. Seu token de redefinição de senha: {{token}}',
+            variables: {
+               user: user.name,
+               token,
+            },
+         },
       });
    }
 }
