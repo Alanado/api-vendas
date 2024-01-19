@@ -21,7 +21,7 @@ profileRoutes.put(
             'any.required': 'O email é obrigatório.',
             'string.empty': 'O email é obrigatório.',
             'string.base': 'Insira um email válido.',
-            'string.email': 'Insira um email válido. E',
+            'string.email': 'Insira um email válido.',
          }),
          password: Joi.string().optional().messages({
             'any.required': 'A senha é obrigatório.',
