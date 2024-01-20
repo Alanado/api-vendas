@@ -6,7 +6,7 @@ interface IRequest {
    id: string;
 }
 
-export default class CreateUserService {
+export default class ShowOrderService {
    public async execute({ id }: IRequest): Promise<Order[]> {
       const order = await OrderRepository.findById(id);
 

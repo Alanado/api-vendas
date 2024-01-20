@@ -15,7 +15,7 @@ interface IRequest {
    products: IProduct[];
 }
 
-export default class CreateUserService {
+export default class CreateOrderService {
    public async execute({ customer_id, products }: IRequest): Promise<Order> {
       const customerExist = await CustomersRepository.findById(customer_id);
 
