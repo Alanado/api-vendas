@@ -11,6 +11,15 @@ const ProductRepository = appDataSource.getRepository(Product).extend({
 
       return product;
    },
+   async findById(id: string): Promise<Product | null> {
+      const product = this.findOne({
+         where: {
+            id,
+         },
+      });
+
+      return product;
+   },
 });
 
 export default ProductRepository;
