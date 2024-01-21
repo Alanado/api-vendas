@@ -10,12 +10,8 @@ interface IRequest {
    fileName: string;
 }
 
-interface IResponse {
-   avatar: string;
-}
-
 export default class UpdateAvatarService {
-   public async execute({ id, fileName }: IRequest): Promise<IResponse> {
+   public async execute({ id, fileName }: IRequest): Promise<User> {
       if (!fileName) {
          throw new AppError('Sem imagem de avatar enviado.');
       }
@@ -36,8 +32,6 @@ export default class UpdateAvatarService {
 
       await UserRepository.save(user);
 
-      return {
-         avatar: fileName,
-      };
+      return user;
    }
 }

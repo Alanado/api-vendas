@@ -1,25 +1,15 @@
 import { Request, Response } from 'express';
 import ListUserService from '../services/ListUserService';
 import CreateUserService from '../services/CreateUserService';
+import { instanceToInstance } from 'class-transformer';
 
 export default class UserController {
    public async index(req: Request, res: Response): Promise<Response> {
       const listUser = new ListUserService();
 
-      const usersInfo = await listUser.execute();
+      const users = await listUser.execute();
 
-      const users = usersInfo.map(user => {
-         return {
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            avatar: user.avatar,
-            created_at: user.created_at,
-            updated_at: user.updated_at,
-         };
-      });
-
-      return res.json(users);
+      return res.json(instanceToInstance(users));
    }
 
    public async create(req: Request, res: Response): Promise<Response> {
@@ -33,8 +23,6 @@ export default class UserController {
          password,
       });
 
-      const { password: _, ...userCreated } = user;
-
-      return res.status(201).json(userCreated);
+      return res.status(201).json(instanceToInstance(user));
    }
 }

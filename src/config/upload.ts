@@ -28,8 +28,6 @@ class UploadConfig {
       ) => {
          const type = mime.extension(file.mimetype) as string;
 
-         console.log(type);
-
          const conditions = ['jpg', 'png', 'jpeg'];
 
          if (!conditions.includes(type)) {

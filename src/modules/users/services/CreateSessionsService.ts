@@ -3,6 +3,7 @@ import UserRepository from '../typeorm/repositories/UsersRepository';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import jwt from '@config/jwtAuth';
+import User from '../typeorm/entities/User';
 
 interface IRequest {
    email: string;
@@ -10,14 +11,7 @@ interface IRequest {
 }
 
 interface IResponse {
-   user: {
-      id: string;
-      name: string;
-      email: string;
-      avatar: string | null;
-      created_at: Date;
-      updated_at: Date;
-   };
+   user: User;
    token: string;
 }
 
@@ -40,10 +34,8 @@ export default class CreateSessionsService {
          expiresIn: jwt.expiresIn,
       });
 
-      const { password: _, ...sessionUser } = user;
-
       return {
-         user: sessionUser,
+         user,
          token: tokenAuthentication,
       };
    }
