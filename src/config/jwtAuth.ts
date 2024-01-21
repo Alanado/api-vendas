@@ -1,5 +1,5 @@
 const jwt = {
-   secret: 'AKSCNDLKFB@$DXDSadSDy646Y20RHFUENOIQJ@',
+   secret: process.env.APP_SECRET,
    expiresIn: '8h',
 };
 

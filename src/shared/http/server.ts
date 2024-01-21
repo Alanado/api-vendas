@@ -1,8 +1,9 @@
-import 'dotenv/config';
 import 'reflect-metadata';
+import 'dotenv/config';
 import express, { NextFunction, Request, Response } from 'express';
 import 'express-async-errors';
 import cors from 'cors';
+import { pagination } from 'typeorm-pagination';
 import routes from './routes';
 import AppError from '@shared/errors/AppError';
 import { appDataSource } from '@shared/typeorm';
@@ -11,6 +12,7 @@ import { uploadConfig } from '@config/upload';
 
 const app = express();
 
+app.use(pagination);
 app.use(cors());
 app.use(express.json());
 app.use('/file', express.static(uploadConfig.directory));

@@ -46,6 +46,7 @@
       "nodemailer": "^6.9.8",
       "pg": "^8.11.3",
       "reflect-metadata": "^0.2.1",
-      "typeorm": "^0.3.19"
+      "typeorm": "^0.3.19",
+      "typeorm-pagination": "^2.0.3"
    }
 }

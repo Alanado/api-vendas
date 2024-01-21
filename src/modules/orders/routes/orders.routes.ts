@@ -34,7 +34,7 @@ ordersRoutes.post(
                   id: Joi.string().uuid().required().messages({
                      'any.required':
                         'Informe o id do produto para realizar a busca.',
-                     'string.guid': 'O id informado não é válido.',
+                     'string.guid': 'O id do produto informado não é válido.',
                   }),
                   quantity: Joi.number().required().positive().messages({
                      'any.required': 'A quantidade do produto é obrigatório.',
