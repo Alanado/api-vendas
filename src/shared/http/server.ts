@@ -3,16 +3,16 @@ import 'dotenv/config';
 import express, { NextFunction, Request, Response } from 'express';
 import 'express-async-errors';
 import cors from 'cors';
-import { pagination } from 'typeorm-pagination';
 import routes from './routes';
 import AppError from '@shared/errors/AppError';
 import { appDataSource } from '@shared/typeorm';
 import { errors } from 'celebrate';
 import { uploadConfig } from '@config/upload';
+import rateLimiter from './middlewares/rateLimiter';
 
 const app = express();
 
-app.use(pagination);
+app.use(rateLimiter);
 app.use(cors());
 app.use(express.json());
 app.use('/files', express.static(uploadConfig.directory));
