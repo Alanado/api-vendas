@@ -3,6 +3,7 @@ import UserRepository from '../typeorm/repositories/UsersRepository';
 import User from '../typeorm/entities/User';
 import { uploadConfig } from '@config/upload';
 import DiskStorageProvider from '@shared/providers/storage/DiskStorageProvider';
+import S3StorageProvider from '@shared/providers/storage/S3StorageProvider';
 
 interface IRequest {
    id: string;
@@ -15,17 +16,31 @@ export default class UpdateAvatarService {
          throw new AppError('Sem imagem de avatar enviado.');
       }
 
-      const storageProvider = new DiskStorageProvider();
-
       const user = (await UserRepository.findById(id)) as User;
 
-      if (user.avatar) {
-         await storageProvider.deleteFile(user.avatar);
+      if (uploadConfig.driver === 'backblaze') {
+         const s3Storage = new S3StorageProvider();
+
+         if (user.avatar) {
+            await s3Storage.deleteFile(user.avatar);
+         }
+
+         const filename = await s3Storage.saveFile(file);
+
+         user.avatar = filename;
       }
 
-      const filename = await storageProvider.saveFile(file);
+      if (uploadConfig.driver === 'disk') {
+         const diskStorage = new DiskStorageProvider();
 
-      user.avatar = filename;
+         if (user.avatar) {
+            await diskStorage.deleteFile(user.avatar);
+         }
+
+         const filename = await diskStorage.saveFile(file);
+
+         user.avatar = filename;
+      }
 
       await UserRepository.save(user);
 

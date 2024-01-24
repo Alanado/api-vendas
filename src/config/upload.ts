@@ -3,6 +3,7 @@ import path from 'path';
 import { Request } from 'express';
 import mime from 'mime';
 import AppError from '@shared/errors/AppError';
+import aws from 'aws-sdk';
 
 const uploadFolder = path.resolve(__dirname, '..', '..', 'uploads');
 const tmpFolder = path.resolve(__dirname, '..', '..', 'temp');
@@ -10,10 +11,13 @@ const tmpFolder = path.resolve(__dirname, '..', '..', 'temp');
 class UploadConfig {
    readonly directory: string = uploadFolder;
    readonly temp: string = tmpFolder;
+   readonly driver: 'disk' | 'backblaze' = String(
+      process.env.STORAGE_DRIVER,
+   ) as 'disk' | 'backblaze';
 
    private storage(): StorageEngine {
       return multer.diskStorage({
-         destination: this.directory,
+         destination: this.temp,
          filename(req, file, callback) {
             const type = mime.extension(file.mimetype);
 
