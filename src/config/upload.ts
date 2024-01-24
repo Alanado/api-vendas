@@ -5,9 +5,11 @@ import mime from 'mime';
 import AppError from '@shared/errors/AppError';
 
 const uploadFolder = path.resolve(__dirname, '..', '..', 'uploads');
+const tmpFolder = path.resolve(__dirname, '..', '..', 'temp');
 
 class UploadConfig {
    readonly directory: string = uploadFolder;
+   readonly temp: string = tmpFolder;
 
    private storage(): StorageEngine {
       return multer.diskStorage({

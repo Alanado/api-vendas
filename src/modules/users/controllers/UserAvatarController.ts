@@ -8,7 +8,7 @@ export default class UserAvatarController {
 
       const avatar = await userAvatar.execute({
          id: req.user.id,
-         fileName: req.file?.filename as string,
+         file: req.file?.filename as string,
       });
 
       return res.status(201).json(instanceToInstance(avatar));
