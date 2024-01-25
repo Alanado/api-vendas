@@ -4,7 +4,7 @@ import UserController from '../controllers/UsersController';
 import authentication from '@shared/http/middlewares/authentication';
 import UserAvatarController from '../controllers/UserAvatarController';
 import multer from 'multer';
-import { uploadConfig } from '@config/upload';
+import { uploadConfig } from '@config/UploadConfig';
 
 const userRoutes = Router();
 const userController = new UserController();

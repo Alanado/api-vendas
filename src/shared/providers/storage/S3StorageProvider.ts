@@ -1,10 +1,11 @@
-import { uploadConfig } from '@config/upload';
 import AppError from '@shared/errors/AppError';
 import aws, { Endpoint, S3 } from 'aws-sdk';
-import fs from 'fs/promises';
 import mime from 'mime';
-import path from 'path';
-import { Z_BUF_ERROR } from 'zlib';
+
+interface ISaveFile {
+   buffer?: Buffer;
+   mimeType?: string;
+}
 
 export default class S3StorageProvider {
    private client: S3;
@@ -21,29 +22,25 @@ export default class S3StorageProvider {
       });
    }
 
-   public async saveFile(file: string): Promise<string> {
-      const filePath = path.resolve(uploadConfig.temp, file);
+   public async saveFile({ buffer, mimeType }: ISaveFile): Promise<string> {
+      const type = mime.extension(mimeType as string);
 
-      const type = mime.extension(filePath);
+      const conditions = ['jpg', 'jpeg', 'png'];
 
-      if (!type) {
-         new AppError('Arquivo não encontrado.');
+      if (!conditions.includes(type as string)) {
+         new AppError('O campo avatar só aceita imagens(jpg, png, jpeg).', 409);
       }
-
-      const contentFile = await fs.readFile(filePath);
-
       const upload = await this.client
          .upload({
             Bucket: String(process.env.KEY_NAME),
-            Key: file,
-            ContentType: type,
-            Body: contentFile,
+            Key: `${Date.now()}.${type}`,
+            ContentType: mimeType,
+            Body: buffer,
+            ACL: 'public-read',
          })
          .promise();
 
-      await fs.unlink(filePath);
-
-      return file;
+      return upload.Key;
    }
 
    public async deleteFile(file: string): Promise<void> {
