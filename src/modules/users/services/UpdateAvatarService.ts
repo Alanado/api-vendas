@@ -1,9 +1,9 @@
-import UserRepository from '../typeorm/repositories/UsersRepository';
-import User from '../typeorm/entities/User';
 import { uploadConfig } from '@config/UploadConfig';
 import S3StorageProvider from '@shared/providers/storage/S3StorageProvider';
 import path from 'path';
 import fs from 'fs/promises';
+import User from '../infra/typeorm/entities/User';
+import UserRepository from '../infra/typeorm/repositories/UsersRepository';
 
 interface IRequest {
    id: string;

@@ -1,9 +1,9 @@
 import AppError from '@shared/errors/AppError';
-import UserRepository from '../typeorm/repositories/UsersRepository';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import jwt from '@config/jwtAuth';
-import User from '../typeorm/entities/User';
+import User from '../infra/typeorm/entities/User';
+import UserRepository from '../infra/typeorm/repositories/UsersRepository';
 
 interface IRequest {
    email: string;

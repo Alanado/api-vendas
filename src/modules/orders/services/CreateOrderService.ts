@@ -1,9 +1,9 @@
 import AppError from '@shared/errors/AppError';
-import Order from '../typeorm/entities/Order';
-import CustomersRepository from '@modules/customers/typeorm/repositories/CustomersRepository';
-import ProductRepository from '@modules/products/typeorm/repositories/ProductsRepository';
-import OrderRepository from '../typeorm/repositories/OrdersRepository';
-import Product from '@modules/products/typeorm/entities/Product';
+import Order from '../infra/typeorm/entities/Order';
+import CustomersRepository from '@modules/customers/infra/typeorm/repositories/CustomersRepository';
+import ProductRepository from '@modules/products/infra/typeorm/repositories/ProductsRepository';
+import OrderRepository from '../infra/typeorm/repositories/OrdersRepository';
+import Product from '@modules/products/infra/typeorm/entities/Product';
 
 interface IProduct {
    id: string;

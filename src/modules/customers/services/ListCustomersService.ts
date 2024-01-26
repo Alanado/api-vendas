@@ -1,5 +1,5 @@
-import Customer from '../typeorm/entities/Customer';
-import CustomersRepository from '../typeorm/repositories/CustomersRepository';
+import Customer from '../infra/typeorm/entities/Customer';
+import CustomersRepository from '../infra/typeorm/repositories/CustomersRepository';
 
 export default class ListCustomersService {
    public async execute(): Promise<Customer[]> {

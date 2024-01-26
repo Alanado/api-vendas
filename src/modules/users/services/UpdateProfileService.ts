@@ -1,7 +1,7 @@
 import AppError from '@shared/errors/AppError';
-import UserRepository from '../typeorm/repositories/UsersRepository';
-import User from '../typeorm/entities/User';
 import { compare, hash } from 'bcryptjs';
+import User from '../infra/typeorm/entities/User';
+import UserRepository from '../infra/typeorm/repositories/UsersRepository';
 
 interface IRequest {
    user_id: string;
@@ -47,11 +47,7 @@ export default class UpdateProfileService {
          user.password = await hash(password, 8);
       }
 
-      user.name = name,
-      user.email = email,
-         
-
-      await UserRepository.save(user);
+      (user.name = name), (user.email = email), await UserRepository.save(user);
 
       return user;
    }
